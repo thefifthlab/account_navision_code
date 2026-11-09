@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- List view -->
+    <record id="view_account_list_navision_code" model="ir.ui.view">
+        <field name="name">account.account.list.navision.code</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="navision_code" string="Navision Code" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Form view - force label -->
+    <record id="view_account_form_navision_code" model="ir.ui.view">
+        <field name="name">account.account.form.navision.code</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <!-- Put the field right after code and force the label -->
+            <xpath expr="//field[@name='code']" position="after">
+                <label for="navision_code" string="Navision Code"/>
+                <field name="navision_code" nolabel="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Kanban view -->
+    <record id="view_account_kanban_navision_code" model="ir.ui.view">
+        <field name="name">account.account.kanban.navision.code</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_account_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="inside">
+                <field name="navision_code"/>
+            </xpath>
+            <xpath expr="//t[@t-name='card']//div[last()]" position="after">
+                <div t-if="record.navision_code.raw_value">
+                    <strong>Navision Code: </strong>
+                    <field name="navision_code"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
